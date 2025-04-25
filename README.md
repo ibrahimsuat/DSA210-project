@@ -12,8 +12,33 @@ Traffic accidents are a major public health and safety concern in Turkey. This p
 
 - **a)** Traffic data will be extracted from TÜİK.  
 - **b)** Educational data will be extracted from MEB, but TÜİK has similar data. In that case, newer or cleaner data will be used.  
-- **c)** The quality of traffic infrastructure and the age of cars are factors as well. To determine the factor of car age, we will use how many cars are sold per thousand, and for traffic infrastructure, we will use how much money has been spent on infrastructure over the past * years to account for and correct these factors as well.  
+- **c)** The quality of traffic infrastructure and the age of cars are factors as well. To determine the factor of car age, we will use how many cars are sold per thousand, and for traffic infrastructure, we will use how much money has been spent on infrastructure over the past * years to account for and correct these factors as well.
 
-# 4. The Plan
+- ## Tools and Technologies
 
-We will cross-examine the data we got from TUIK and MEB to determine if education affects traffic accidents on a per city basis.
+I’ll rely on the following tools for data analysis and visualization:
+
+- **Python**: For data cleaning and statistical analysis  
+- **Pandas**: To manipulate and preprocess data  
+- **Matplotlib and Seaborn**: For creating visualizations (scatter plots, heatmaps, time series)  
+- **SciPy**: For hypothesis testing and regression analysis    
+
+# Analysis Plan
+
+1. **Data Collection**  
+   - TUIK provides downloadable csv files from the website, i will download the required data using the webportal
+
+2. **Visualization**  
+   - Use scatter plots,   
+   - Examples include:    
+
+3. **Hypothesis Testing**  
+   - Test hypotheses like:  
+     - **H₀**: Daily habits have no effect on Bench Press performance.  
+     - **Hₐ**: One or more daily variables significantly impact Bench Press performance.  
+   - Run regression analysis to identify the strongest predictors of progress.
+
+4. **Trend Analysis**  
+   - Investigate patterns in performance over time, identifying peaks or plateaus.  
+   - Analyze how body weight fluctuations and day-to-day difficulty ratings correlate with performance trends.
+
