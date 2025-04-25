@@ -1,0 +1,29 @@
+1-"what would be the best data visualizaton method to compare education levels with traffic accidents per city basis" 
+2-"here is my code and here is the raw data (insert raw data) could you make the code for removeing unnecessary parts so python can read it"
+3-"instead of debugging it can i just clamp the value to 81?"
+4-"how can i ommit istanbul from this data when i delete it i get an error"
+5-"could you help me with plotting this data, i want to see all the city names"
+6-"the graph is very populated on the left side could you make something so it is more evenly distrubted ?"
+
+ordered answers:
+1-scatter plot(and others)
+2-Sure! To make sure Python can read the raw data properly, we need to process the string and convert it into useful data structures (like lists or pandas DataFrame). This involves removing unnecessary parts, such as labels or symbols that are not relevant for analysis.
+
+Here’s how you can process your raw data for both the provinces and education/accident data:
+
+Clean up the raw data: Strip unnecessary parts from the string and split it into individual elements.
+
+Convert the data into numerical values: For example, converting education years and accident counts into float values.
+
+Here is the code that will remove the unnecessary parts and make the data usable:
+3-Sure! If you want to clamp the data lengths to 81, we can trim or pad the data so that all arrays have exactly 81 entries. This approach ensures that the lengths are consistent, and the calculations can proceed without errors.
+
+Here's how you can adjust the lengths:
+
+Clamp the lengths: We'll truncate the data to the first 81 values or pad the remaining values with NaN (if the list is shorter than 81).
+
+Handle NaN values: We'll remove any NaN values before performing the correlation.
+
+Here is the updated code that clamps the lengths to 81:
+4-To remove İstanbul from the dataset and the plot, you can filter it out from the DataFrame before plotting.ere’s the updated code with İstanbul removed
+5-
