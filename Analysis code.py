@@ -28,7 +28,7 @@ education_values = [min(x, 12.0) for x in education_values]  # Clamp to max 12 y
 traffic_line = re.search(r"Ölümlü Yaralanmalı Trafik Kaza Sayısı.*?\|([\d\.\|]+)", traffic_raw)
 traffic_values = [float(x) for x in traffic_line.group(1).split("|") if x.strip()]
 
-# ---------- Population Dictionary (WILL BE CHANGED LATER I CANNOT GET PYTHON TO READ .XLS FILES) ----------
+# ---------- Population Dictionary (WILL BE CHANGED LATER I CANNOT GET PYTHON TO READ .XLS FILES WHICH TUIK PROVIDES) ----------
 population_dict = {
     'Adana': 2270925, 'Adıyaman': 635169, 'Afyonkarahisar': 747555, 'Aksaray': 429977, 'Amasya': 335331,
     'Ankara': 5663322, 'Antalya': 2697221, 'Ardahan': 96872, 'Artvin': 169501, 'Aydın': 1134036,
@@ -90,6 +90,21 @@ plt.title("Traffic Accidents per 1000 People vs. Avg. Years of Schooling (2023, 
 plt.xlabel("Traffic Accidents per 1000 People (Log Scale)")
 plt.ylabel("Average Years of Schooling")
 plt.tight_layout()
+
+# Annotate almost all
+for _, row in df.iterrows():
+    plt.text(row["Accidents_per_1000"] * 1.01, row["Avg_Education_Years"] + 0.05,
+             row["Province"], fontsize=7, alpha=0.8)
+
+# Add correlation text
+plt.text(
+    0.02, 11.5,
+    f"p = {p:.4f}",
+    fontsize=12,
+    bbox=dict(facecolor="white", alpha=0.7, edgecolor="black")
+)
+
+plt.show()
 
 # Hypothesis Testing for Correlation between Education and Accidents
 
