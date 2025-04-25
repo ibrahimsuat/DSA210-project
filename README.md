@@ -2,6 +2,9 @@
 
 Traffic accidents are a major public health and safety concern in Turkey. This project aims to investigate the potential relationship between education levels and traffic collision rates in different regions of Turkey. By analyzing data on educational levels and traffic accidents (deadly or not), we can identify correlations between education levels and traffic accidents, finally putting an end to the much-repeated question: "Are bad drivers uneducated?" Istanbul is most likely to be excluded from the dataset due to its heavy immigration from other cities, but it will be considered separately.
 
+## Motivation
+Curosity is main driver for this project, Personally i heard many people call other people uneducated for various reasons but i heard the phrase most in traffic and i want to end this conversation for good.
+
 ## Objectives
 
 - **a)** To determine if there is any relationship between driving responsibly and education.  
@@ -18,10 +21,11 @@ Traffic accidents are a major public health and safety concern in Turkey. This p
 
 I’ll rely on the following tools for data analysis and visualization:
 
-- **Python**: For data cleaning and statistical analysis  
-- **Pandas**: To manipulate and preprocess data  
-- **Matplotlib and Seaborn**: For creating visualizations (scatter plots, heatmaps, time series)  
-- **SciPy**: For hypothesis testing and regression analysis    
+- **Python**: For data cleaning and statistical analysis.  
+- **Pandas**: To manipulate and preprocess data.
+- **Matplotlib and Seaborn**: For creating visualizations.  
+- **SciPy**: For hypothesis testing.
+- **regex**: For formatting and removing unwanted values.
 
 # Analysis Plan
 
