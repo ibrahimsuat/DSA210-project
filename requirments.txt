@@ -1,0 +1,5 @@
+"pandas" for data manipulation
+"re" for regex
+"matplotlib" for plotting
+"seaborn" for themes(in plotting)
+"scipy" for hypothesis testing
