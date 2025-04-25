@@ -24,7 +24,7 @@ I’ll rely on the following tools for data analysis and visualization:
 - **Python**: For data cleaning and statistical analysis.  
 - **Pandas**: To manipulate and preprocess data.
 - **Matplotlib and Seaborn**: For creating visualizations.  
-- **SciPy**: For hypothesis testing.
+- **Scipy**: For hypothesis testing.
 - **regex**: For formatting and removing unwanted values.
 
 # Analysis Plan
