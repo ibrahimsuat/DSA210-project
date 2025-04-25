@@ -82,8 +82,8 @@ sns.regplot(
     logx=True
 )
 
-plt.xscale("log")
-plt.gca().xaxis.set_major_formatter(ScalarFormatter())
+plt.xscale("log") #for log scale
+plt.gca().xaxis.set_major_formatter(ScalarFormatter()) # to show numbers in plain format
 plt.ticklabel_format(style='plain', axis='x')
 
 plt.title("Traffic Accidents per 1000 People vs. Avg. Years of Schooling (2023, Turkey)")
