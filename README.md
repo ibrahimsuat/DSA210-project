@@ -26,7 +26,6 @@ I’ll rely on the following tools for data analysis and visualization:
 - **Matplotlib and Seaborn**: For creating visualizations.  
 - **Scipy**: For hypothesis testing.
 - **Regex**: For formatting and removing unwanted values.
-- **Seaborn**: Themes for plotting.
 
 # Analysis Plan
 
