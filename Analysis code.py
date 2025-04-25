@@ -14,6 +14,82 @@ with open("education.csv", "r", encoding="utf-8") as f:
 with open("traffic.csv", "r", encoding="utf-8") as f:
     traffic_raw = f.read()
 
+# ---------- Extract Province Names ----------
+province_line = re.search(r"Satırlar\|\|\|(.+?)\|?\n", education_raw).group(1)
+province_parts = province_line.split("|")
+provinces = [p.rsplit("-", 1)[0] for p in province_parts]
+
+# ---------- Extract Education Data ----------
+edu_line = re.search(r"Ortalama Eğitim Süresi.*?\|([\d\.\|]+)", education_raw)
+education_values = [float(x) for x in edu_line.group(1).split("|") if x.strip()]
+education_values = [min(x, 12.0) for x in education_values]  # Clamp to max 12 years because there is one city with 2000 years of education
+
+# ---------- Extract Traffic Data ----------
+traffic_line = re.search(r"Ölümlü Yaralanmalı Trafik Kaza Sayısı.*?\|([\d\.\|]+)", traffic_raw)
+traffic_values = [float(x) for x in traffic_line.group(1).split("|") if x.strip()]
+
+# ---------- Population Dictionary (WILL BE CHANGED LATER I CANNOT GET PYTHON TO READ .XLS FILES) ----------
+population_dict = {
+    'Adana': 2270925, 'Adıyaman': 635169, 'Afyonkarahisar': 747555, 'Aksaray': 429977, 'Amasya': 335331,
+    'Ankara': 5663322, 'Antalya': 2697221, 'Ardahan': 96872, 'Artvin': 169501, 'Aydın': 1134036,
+    'Ağrı': 524644, 'Balıkesir': 1290035, 'Bartın': 203351, 'Batman': 634491, 'Bayburt': 86021,
+    'Bilecik': 372194, 'Bingöl': 281205, 'Bitlis': 352674, 'Bolu': 320865, 'Burdur': 273716,
+    'Bursa': 3472468, 'Denizli': 1050000, 'Diyarbakır': 1822163, 'Düzce': 405131, 'Edirne': 414714,
+    'Elazığ': 587802, 'Erzincan': 239223, 'Erzurum': 756893, 'Eskişehir': 898369, 'Gaziantep': 2172022,
+    'Giresun': 419555, 'Gümüşhane': 141702, 'Hakkari': 280514, 'Hatay': 1692043, 'Isparta': 453994,
+    'Iğdır': 209540, 'Kahramanmaraş': 1181543, 'Karabük': 252058, 'Karaman': 263058, 'Kars': 292660,
+    'Kastamonu': 383373, 'Kayseri': 1450906, 'Kilis': 155179, 'Kocaeli': 2062740, 'Konya': 2326610,
+    'Kütahya': 571554, 'Kırklareli': 369433, 'Kırıkkale': 280379, 'Kırşehir': 244519, 'Malatya': 812580,
+    'Manisa': 1431380, 'Mardin': 868716, 'Mersin': 1918889, 'Muğla': 848313, 'Muş': 303010,
+    'Nevşehir': 310011, 'Niğde': 772872, 'Ordu': 559405, 'Osmaniye': 344016, 'Rize': 1130602,
+    'Sakarya': 1390420, 'Samsun': 1355552, 'Siirt': 331311, 'Sinop': 218408, 'Sivas': 637723,
+    'Tekirdağ': 1130402, 'Tokat': 596454, 'Trabzon': 832178, 'Tunceli': 86157, 'Uşak': 370509,
+    'Van': 591204, 'Yalova': 599698, 'Yozgat': 841556, 'Zonguldak': 975763, 'Çanakkale': 273031,
+    'Çankırı': 455177, 'Çorum': 597834, 'İstanbul': 15704185, 'İzmir': 4320519, 'Şanlıurfa': 2330053,
+    'Şırnak': 557605
+}
+
+# ---------- Create DataFrame ----------
+df = pd.DataFrame({
+    "Province": provinces[:len(education_values)],
+    "Avg_Education_Years": education_values[:len(provinces)],
+    "Traffic_Accidents": traffic_values[:len(provinces)]
+})
+
+# Remove Istanbul
+df = df[df["Province"] != "İstanbul"]
+
+# Match population
+df["Population"] = df["Province"].map(population_dict)
+
+# Drop missing
+df = df.dropna()
+
+# Calculate per capita
+df["Accidents_per_1000"] = df["Traffic_Accidents"] / (df["Population"] / 1000)
+
+# ---------- Correlation ----------
+r, p = pearsonr(df["Avg_Education_Years"], df["Accidents_per_1000"])
+
+# ---------- Plot ----------
+plt.figure(figsize=(14, 8))
+sns.regplot(
+    data=df,
+    x="Accidents_per_1000",
+    y="Avg_Education_Years",
+    scatter_kws={"color": "teal", "s": 60, "alpha": 0.7},
+    line_kws={"color": "orangered", "lw": 2},
+    logx=True
+)
+
+plt.xscale("log")
+plt.gca().xaxis.set_major_formatter(ScalarFormatter())
+plt.ticklabel_format(style='plain', axis='x')
+
+plt.title("Traffic Accidents per 1000 People vs. Avg. Years of Schooling (2023, Turkey)")
+plt.xlabel("Traffic Accidents per 1000 People (Log Scale)")
+plt.ylabel("Average Years of Schooling")
+plt.tight_layout()
 
 # Hypothesis Testing for Correlation between Education and Accidents
 
