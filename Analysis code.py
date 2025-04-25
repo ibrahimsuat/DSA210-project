@@ -28,7 +28,7 @@ education_values = [min(x, 12.0) for x in education_values]  # Clamp to max 12 y
 traffic_line = re.search(r"Ölümlü Yaralanmalı Trafik Kaza Sayısı.*?\|([\d\.\|]+)", traffic_raw)
 traffic_values = [float(x) for x in traffic_line.group(1).split("|") if x.strip()]
 
-# ---------- Population Dictionary (WILL BE CHANGED LATER I CANNOT GET PYTHON TO READ .XLS FILES WHICH TUIK PROVIDES) ----------
+# ---------- Population estimates (WILL BE CHANGED LATER I CANNOT GET PYTHON TO READ .XLS FILES WHICH TUIK PROVIDES) ----------
 population_dict = {
     'Adana': 2270925, 'Adıyaman': 635169, 'Afyonkarahisar': 747555, 'Aksaray': 429977, 'Amasya': 335331,
     'Ankara': 5663322, 'Antalya': 2697221, 'Ardahan': 96872, 'Artvin': 169501, 'Aydın': 1134036,
