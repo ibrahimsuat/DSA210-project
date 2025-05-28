@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib.ticker import ScalarFormatter
 from scipy.stats import pearsonr
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error, r2_score
 
 # ---------- Load and Parse CSV Files ----------
 with open("education.csv", "r", encoding="utf-8") as f:
@@ -27,7 +30,7 @@ education_values = [min(x, 12.0) for x in education_values]  # Clamp to max 12 y
 traffic_line = re.search(r"Ölümlü Yaralanmalı Trafik Kaza Sayısı.*?\|([\d\.\|]+)", traffic_raw)
 traffic_values = [float(x) for x in traffic_line.group(1).split("|") if x.strip()]
 
-# ---------- Population estimates (WILL BE CHANGED LATER I CANNOT GET PYTHON TO READ .XLS FILES WHICH TUIK PROVIDES) ----------
+# ---------- Population estimates (I CANNOT GET PYTHON TO READ .XLS FILES WHICH TUIK PROVIDES) ----------
 population_dict = {
     'Adana': 2270925, 'Adıyaman': 635169, 'Afyonkarahisar': 747555, 'Aksaray': 429977, 'Amasya': 335331,
     'Ankara': 5663322, 'Antalya': 2697221, 'Ardahan': 96872, 'Artvin': 169501, 'Aydın': 1134036,
@@ -106,7 +109,6 @@ plt.text(
 plt.show()
 
 # Hypothesis Testing for Correlation between Education and Accidents
-
 r_value, p_value = pearsonr(df["Avg_Education_Years"], df["Accidents_per_1000"])
 
 print("Hypothesis Test:")
@@ -119,3 +121,16 @@ if p_value < alpha:
     print("✅ Reject the null hypothesis: There is a statistically significant relationship.")
 else:
     print("❌ Fail to reject the null hypothesis: No statistically significant relationship.")
+
+# ---------- Machine Learning Model ----------
+X = df[["Avg_Education_Years", "Population"]]
+y = df["Accidents_per_1000"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+print("\nMachine Learning Model Performance:")
+print(f"Mean Squared Error: {mse:.4f}")
+print(f"R-squared: {r2:.4f}")
