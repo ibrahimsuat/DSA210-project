@@ -8,6 +8,8 @@ from scipy.stats import pearsonr
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
 
 # ---------- Load and Parse CSV Files ----------
 with open("education.csv", "r", encoding="utf-8") as f:
@@ -141,3 +143,9 @@ y_pred = model.predict(X_test)
 print("\n--- ML Evaluation ---")
 print(f"Mean Squared Error: {mean_squared_error(y_test, y_pred):.4f}")
 print(f"R² Score: {r2_score(y_test, y_pred):.4f}")
+
+X = df[["Avg_Education_Years", "Accidents_per_1000"]]
+X_scaled = StandardScaler().fit_transform(X)
+
+kmeans = KMeans(n_clusters=3, random_state=42)
+df["Cluster"] = kmeans.fit_predict(X_scaled)
