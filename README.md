@@ -16,7 +16,7 @@ Curosity is main driver for this project, Personally i heard many people call ot
 - **a)** Traffic data will be extracted from TÜİK.  
 - **b)** Educational data will be extracted from MEB, but TÜİK has similar data. In that case, newer or cleaner data will be used.  
 - **c)** The quality of traffic infrastructure and the age of cars are factors as well. To determine the factor of car age, we will use how many cars are sold per thousand, and for traffic infrastructure, we will use how much money has been spent on infrastructure over the past * years to account for and correct these factors as well.
-
+- **d)** Machine learning methods will be used to determine the real cause of traffic accidents(if not education). For simplisity we will only look the to population density and TBD
 - ## Tools and Technologies
 
 I’ll rely on the following tools for data analysis and visualization:
