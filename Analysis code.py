@@ -148,4 +148,4 @@ X = df[["Avg_Education_Years", "Accidents_per_1000"]]
 X_scaled = StandardScaler().fit_transform(X)
 
 kmeans = KMeans(n_clusters=3, random_state=42)
-df["Cluster"] = kmeans.fit_predict(X_scaled)
+df["Cluster"] = kmeans.fit_transform(X_scaled)
