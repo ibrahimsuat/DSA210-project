@@ -120,32 +120,21 @@ print(f"p-value: {p_value:.4f}")
 alpha = 0.05  # Significance level
 
 if p_value < alpha:
-    print("✅ Reject the null hypothesis: There is a statistically significant relationship.")
+    print("Reject the null hypothesis: There is a statistically significant relationship.")
 else:
-    print("❌ Fail to reject the null hypothesis: No statistically significant relationship.")
+    print("Fail to reject the null hypothesis: No statistically significant relationship.")
 
 # ---------- Machine Learning Model ----------
-# Define features and target
-X = df[["Avg_Education_Years"]]
-y = df["Accidents_per_1000"]
+#since our hypothesis was wrong we are going to try to find the real cause of accidents.
+#i included household income and number of cars on the road as a feature to see if it has any effect on accidents.
 
-# Train-test split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+cars_df = pd.read_csv("cars.csv") #i figured reformatting the csv file to have a two column with all the data in it. TUIK gives horrid csv files.
+income_df = pd.read_csv("household.csv") 
 
-# Train Random Forest model
-model = RandomForestRegressor(n_estimators=100, random_state=42)
-model.fit(X_train, y_train)
+income_df.columns = ["Province", "Household_Income"]
 
-# Predict
-y_pred = model.predict(X_test)
+df = df.merge(income_df, on="Province", how="left")
+df["Number_of_Cars"] = df["Province"].map(cars_df.set_index('Province')['Number_of_Cars'])
+#print(income_df.columns)
 
-# Evaluate
-print("\n--- ML Evaluation ---")
-print(f"Mean Squared Error: {mean_squared_error(y_test, y_pred):.4f}")
-print(f"R² Score: {r2_score(y_test, y_pred):.4f}")
 
-X = df[["Avg_Education_Years", "Accidents_per_1000"]]
-X_scaled = StandardScaler().fit_transform(X)
-
-kmeans = KMeans(n_clusters=3, random_state=42)
-df["Cluster"] = kmeans.fit_transform(X_scaled)
