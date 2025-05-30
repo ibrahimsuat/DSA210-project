@@ -8,8 +8,8 @@ Curosity is main driver for this project, Personally i heard many people call ot
 ## Objectives
 
 - **a)** To determine if there is any relationship between driving responsibly and education.  
-- **b)** To analyze any regional variations between the 7 districts of Turkey.  
-- **c)** Try to determine the real cause of traffic accidents  
+- **b)** Try to determine the real cause of traffic accidents   
+- **c)** Use machine learning to make predictions
 
 ## Methods
 
