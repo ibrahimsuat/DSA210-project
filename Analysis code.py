@@ -7,7 +7,7 @@ from matplotlib.ticker import ScalarFormatter
 from scipy.stats import pearsonr
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import mean_squared_error
 
 
 # ---------- Load and Parse CSV Files ----------
@@ -94,18 +94,10 @@ plt.xlabel("Traffic Accidents per 1000 People (Log Scale)")
 plt.ylabel("Average Years of Schooling")
 plt.tight_layout()
 
-# Annotate almost all
+# Annotate almost all points
 for _, row in df.iterrows():
     plt.text(row["Accidents_per_1000"] * 1.01, row["Avg_Education_Years"] + 0.05,
              row["Province"], fontsize=7, alpha=0.8)
-
-# Add correlation text
-plt.text(
-    0.02, 11.5,
-    f"p = {p:.4f}",
-    fontsize=12,
-    bbox=dict(facecolor="white", alpha=0.7, edgecolor="black")
-)
 
 plt.show()
 
@@ -130,32 +122,32 @@ else:
 cars_df = pd.read_csv("cars.csv") #i figured reformatting the csv file to have a two column with all the data in it. TUIK gives horrid csv files.
 income_df = pd.read_csv("household.csv") 
 
-income_df.columns = ["Province", "Household_Income"]
+income_df.columns = ["Province", "Household_Income"] #rename columns to match the main dataframe
 
 df = df.merge(income_df, on="Province", how="left")
-df["Number_of_Cars"] = df["Province"].map(cars_df.set_index('Province')['Number_of_Cars'])
+df["Number_of_Cars"] = df["Province"].map(cars_df.set_index('Province')['Number_of_Cars']) #map the number of cars to the main dataframe
 #print(income_df.columns)
 
-X = df[["Avg_Education_Years", "Household_Income", "Number_of_Cars"]]
-y = df["Accidents_per_1000"]
+X = df[["Avg_Education_Years", "Household_Income", "Number_of_Cars"]] #to train
+y = df["Accidents_per_1000"] #to predict
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42, test_size=0.3)
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42, test_size=0.3) # Split the data into training and testing sets
 
-model = RandomForestRegressor(random_state=42) 
+model = RandomForestRegressor(random_state=42) #model selection
 model.fit(X_train, y_train)
 
-y_pred = model.predict(X_test)
+Predict = model.predict(X_test)
 
-mse = mean_squared_error(y_test, y_pred)
+mse = mean_squared_error(y_test, Predict)
 
 print(f"Random Forest Regression MSE: {mse:.4f}")
 
-for name, importance in zip(X.columns, model.feature_importances_):
+for name, importance in zip(X.columns, model.feature_importances_): #check feature importance
     print(f"{name}, Importance: {importance:.4f}")
 
 plt.figure(figsize=(8, 6))
-plt.scatter(y_test, y_pred, color="teal", alpha=0.7, s=60)
-plt.plot([y.min(), y.max()/4], [y.min(), y.max()/4], color="orangered", linestyle="--", lw=2)
+plt.scatter(y_test, Predict, color="teal", alpha=0.7, s=60)
+plt.plot([y.min(), y.max()/4], [y.min(), y.max()/4], color="orange", linestyle="--", lw=2)
 plt.xlabel("Real Accidents per 1000")
 plt.ylabel("Predicted Accidents per 1000")
 plt.title("Actual vs Predicted for Random Forest")

@@ -1,3 +1,0 @@
--consider istanbul seperately
--remove big dictionary from the main code 
--add the money spent on the traffic infrastructure to the equation of accidents.
