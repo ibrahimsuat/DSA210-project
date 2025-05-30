@@ -8,8 +8,7 @@ from scipy.stats import pearsonr
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.cluster import KMeans
-from sklearn.preprocessing import StandardScaler
+
 
 # ---------- Load and Parse CSV Files ----------
 with open("education.csv", "r", encoding="utf-8") as f:
@@ -124,7 +123,7 @@ if p_value < alpha:
 else:
     print("Fail to reject the null hypothesis: No statistically significant relationship.")
 
-# ---------- Machine Learning Model ----------
+# ---------- Machine Learning ----------
 #since our hypothesis was wrong we are going to try to find the real cause of accidents.
 #i included household income and number of cars on the road as a feature to see if it has any effect on accidents.
 
@@ -137,4 +136,29 @@ df = df.merge(income_df, on="Province", how="left")
 df["Number_of_Cars"] = df["Province"].map(cars_df.set_index('Province')['Number_of_Cars'])
 #print(income_df.columns)
 
+X = df[["Avg_Education_Years", "Household_Income", "Number_of_Cars"]]
+y = df["Accidents_per_1000"]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42, test_size=0.3)
+
+model = RandomForestRegressor(random_state=42) 
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+
+mse = mean_squared_error(y_test, y_pred)
+
+print(f"Random Forest Regression MSE: {mse:.4f}")
+
+for name, importance in zip(X.columns, model.feature_importances_):
+    print(f"{name}, Importance: {importance:.4f}")
+
+plt.figure(figsize=(8, 6))
+plt.scatter(y_test, y_pred, color="teal", alpha=0.7, s=60)
+plt.plot([y.min(), y.max()/4], [y.min(), y.max()/4], color="orangered", linestyle="--", lw=2)
+plt.xlabel("Real Accidents per 1000")
+plt.ylabel("Predicted Accidents per 1000")
+plt.title("Actual vs Predicted for Random Forest")
+plt.tight_layout()
+plt.show()
 
