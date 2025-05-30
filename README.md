@@ -40,4 +40,6 @@ I’ll rely on the following tools for data analysis and visualization:
      - **H₀**: Amount of education does not impact traffic. 
      - **Hₐ**: Amount of edcuation does impact traffic and leads to more accidents 
 
+## To reproduce this analysis
 
+   -simply download this repository and run the python code with requirements installed beforehand.
