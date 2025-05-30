@@ -25,7 +25,7 @@ provinces = [p.rsplit("-", 1)[0] for p in province_parts]
 # ---------- Extract Education Data ----------
 edu_line = re.search(r"Ortalama Eğitim Süresi.*?\|([\d\.\|]+)", education_raw)
 education_values = [float(x) for x in edu_line.group(1).split("|") if x.strip()]
-education_values = [min(x, 12.0) for x in education_values]  # Clamp to max 12 years because there is one city with 2000 years of education
+education_values = [min(x, 12.0) for x in education_values]  # Clamp to max 12 years because there is one city with 2000 years of education(not a typo, it is a real value in the dataset)
 
 # ---------- Extract Traffic Data ----------
 traffic_line = re.search(r"Ölümlü Yaralanmalı Trafik Kaza Sayısı.*?\|([\d\.\|]+)", traffic_raw)
@@ -71,10 +71,10 @@ df = df.dropna()
 # Calculate per capita
 df["Accidents_per_1000"] = df["Traffic_Accidents"] / (df["Population"] / 1000)
 
-# ---------- Correlation ----------
+# Correlation
 r, p = pearsonr(df["Avg_Education_Years"], df["Accidents_per_1000"])
 
-# ---------- Plot ----------
+
 plt.figure(figsize=(14, 8))
 sns.regplot(
     data=df,

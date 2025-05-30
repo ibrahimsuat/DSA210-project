@@ -11,6 +11,7 @@ for getting advice and handeling errors. Some code is directly from recitation f
 7-"what does make regressor do"
 8-"here is my cvs file "cvs.file" make it a proper file"
 9-"i am getting this error " ValueError: With n_samples=0, test_size=0.3 and train_size=None, the resulting train set will be empty. Adjust any of the aforementioned parameters.10-i gave an error about an empty index to gpt
+11- make me a dict for population estimes of turkey
 
 ordered answers:
 1-scatter plot(and others)
@@ -34,10 +35,13 @@ Handle NaN values: We'll remove any NaN values before performing the correlation
 Here is the updated code that clamps the lengths to 81:
 4-To remove İstanbul from the dataset and the plot, you can filter it out from the DataFrame before plotting.ere’s the updated code with İstanbul removed
 5-(code given for annotating all cities on the graph)
-6-(use log)
+6-(use log for plotting)
 7-"Only use make_regression if you want to experiment with synthetic data "
 8-household.cvs
 9-"The DataFrame df may have been filtered or mismatched, leaving no rows with all required columns and no missing data. might be full of NaNs"
-10- told me it was an error and provided no fix, i figured it was something with the files
+10- told me it was an error and provided no fix, i figured it was something with the csv files
+11- (gave a big dict with estimates)
+12- 
+
 
 
